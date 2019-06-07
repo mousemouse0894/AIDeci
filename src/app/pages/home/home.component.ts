@@ -19,11 +19,12 @@ export class HomeComponent implements OnInit {
   ];
 
   //ValueResult
-  public Hair: any = "1";
-  public Height: any = "1";
-  public Weight: any = "1";
-  public Lotion: any = "1";
+  public Hair: any = "0";
+  public Height: any = "0";
+  public Weight: any = "0";
+  public Lotion: any = "0";
   public Result: any;
+  public timeprocess: number = 0;
 
   //ValueAlgorithmRoot
   public sum = {
@@ -116,15 +117,35 @@ export class HomeComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  constructor() {
+    this.onIGRoot();
+    this.onIGleafnode();
+  }
 
   ngOnInit() {
-    this.onIGRoot();
+
   }
+
+   //process
+   public processTree(){
+     if(this.Hair == "3"){
+       this.Result = "Sunburned"
+     }
+     if(this.Hair == "2"){
+      this.Result = "None"
+     }
+     if(this.Hair == "1" && this.Lotion == "1"){
+         this.Result = "None"
+     }
+
+     if(this.Hair == "1" && this.Lotion == "2"){
+      this.Result = "Sunburned"
+     }
+   }
 
   //FunctionAlgorithmRoot
   public onIGRoot() {
-    let timeStart = new Date().valueOf()
+
     for (let i = 0; i < Object.keys(this.MydataSET).length; i++) {
       let countSunburned = 0;
       let countNone = 0;
@@ -202,12 +223,11 @@ export class HomeComponent implements OnInit {
       (this.MydataSET.Lotion.no.p.proot * this.Entropy.Lotion.no))
 
     //console.log(this.IG)
-    let timeEnd = new Date().valueOf()
     // console.log(timeEnd-timeStart)
-    console.log(this.MydataSET)
-    console.log(this.Entropy)
-    console.log(this.sum)
-    // console.log(this.IG)
+    // console.log(this.MydataSET)
+    // console.log(this.Entropy)
+    // console.log(this.sum)
+    console.log(this.timeprocess)
   }
 
 
@@ -220,65 +240,65 @@ export class HomeComponent implements OnInit {
       let countroot = 0;
 
       this.record.forEach(e => {
-        if(e.Hair == "blonde"){
-        this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]][e["Result"]] += 1;
-        countSunburned = this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["sunburned"];
-        countNone = this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["none"];
-        countroot = this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["pnode"];
-        this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["pnode"] = countNone + countSunburned
-        this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["none"] = countNone / (countNone + countSunburned);
-        this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["sunburned"] = countSunburned / (countNone + countSunburned);
-        this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["proot"] = countroot / this.sumleaf.result
+        if (e.Hair == "blonde") {
+          this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]][e["Result"]] += 1;
+          countSunburned = this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["sunburned"];
+          countNone = this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["none"];
+          countroot = this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["pnode"];
+          this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["pnode"] = countNone + countSunburned
+          this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["none"] = countNone / (countNone + countSunburned);
+          this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["sunburned"] = countSunburned / (countNone + countSunburned);
+          this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["proot"] = countroot / this.sumleaf.result
         }
       });
     }
 
-      this.record.forEach(e => {
-        if(e.Hair == "blonde"){
-       this.sumleaf[e["Result"]] += 1;
-       this.sumleaf["result"] += 1;
+    this.record.forEach(e => {
+      if (e.Hair == "blonde") {
+        this.sumleaf[e["Result"]] += 1;
+        this.sumleaf["result"] += 1;
+      }
+    });
+
+    this.sumleaf.sunburned = this.sumleaf.sunburned / this.sumleaf.result;
+    this.sumleaf.none = this.sumleaf.none / this.sumleaf.result;
+    this.Entropyleaf["Result"] = -(
+      this.sumleaf.sunburned * Math.log2(this.sumleaf.sunburned) +
+      this.sumleaf.none * Math.log2(this.sumleaf.none)
+    );
+
+    let sumWhere = 0;
+    for (let i = 1; i < Object.keys(this.Entropyleaf).length; i++) {
+      Object.keys(this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]]).forEach(e => {
+        if (e != "result") {
+          sumWhere = -(this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]][e]["p"]["sunburned"] *
+            Math.log2(this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]][e]["p"][
+              "sunburned"
+            ]
+            ) +
+            this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]][e]["p"]["none"] *
+            Math.log2(
+              this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]][e]["p"]["none"]
+            )
+          );
+
+          this.Entropyleaf[Object.keys(this.Entropyleaf)[i]][e] = sumWhere
+            ? sumWhere
+            : 0;
         }
       });
+    }
 
-      this.sumleaf.sunburned = this.sumleaf.sunburned / this.sumleaf.result;
-      this.sumleaf.none = this.sumleaf.none / this.sumleaf.result;
-      this.Entropyleaf["Result"] = -(
-        this.sumleaf.sunburned * Math.log2(this.sumleaf.sunburned) +
-        this.sumleaf.none * Math.log2(this.sumleaf.none)
-      );
+    for (let i = 0; i < Object.keys(this.MydataSETleaf).length; i++) {
+      let countroot = 0;
+      this.record.forEach(e => {
+        this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]][e["Result"]] += 1;
+        countroot = this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["pnode"];
+        this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["proot"] = countroot / this.sumleaf.result
+      });
+    }
 
-      let sumWhere = 0;
-      for (let i = 1; i < Object.keys(this.Entropyleaf).length; i++) {
-        Object.keys(this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]]).forEach(e => {
-          if (e != "result") {
-            sumWhere = -(this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]][e]["p"]["sunburned"] *
-              Math.log2(this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]][e]["p"][
-                "sunburned"
-              ]
-              ) +
-              this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]][e]["p"]["none"] *
-              Math.log2(
-                this.MydataSETleaf[Object.keys(this.Entropyleaf)[i]][e]["p"]["none"]
-              )
-            );
-
-            this.Entropyleaf[Object.keys(this.Entropyleaf)[i]][e] = sumWhere
-              ? sumWhere
-              : 0;
-          }
-        });
-      }
-
-      for (let i = 0; i < Object.keys(this.MydataSETleaf).length; i++) {
-        let countroot = 0;
-        this.record.forEach(e => {
-          this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]][e["Result"]] += 1;
-          countroot = this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["pnode"];
-          this.MydataSETleaf[Object.keys(this.MydataSETleaf)[i]][e[Object.keys(this.MydataSETleaf)[i]]]["p"]["proot"] = countroot / this.sumleaf.result
-        });
-      }
-
-      this.IGleaf.Height = this.Entropyleaf.Result - ((this.MydataSETleaf.Height.average.p.proot * this.Entropyleaf.Height.average) +
+    this.IGleaf.Height = this.Entropyleaf.Result - ((this.MydataSETleaf.Height.average.p.proot * this.Entropyleaf.Height.average) +
       (this.MydataSETleaf.Height.short.p.proot * this.Entropyleaf.Height.short) +
       (this.MydataSETleaf.Height.tall.p.proot * this.Entropyleaf.Height.tall))
 
@@ -290,11 +310,11 @@ export class HomeComponent implements OnInit {
       (this.MydataSETleaf.Lotion.no.p.proot * this.Entropyleaf.Lotion.no))
 
 
-console.log(this.MydataSETleaf)
- //console.log(this.sumleaf)
-  //console.log(this.IG)
- console.log(this.Entropyleaf)
-console.log(this.IGleaf)
+    // console.log(this.MydataSETleaf)
+    // console.log(this.sumleaf)
+    // console.log(this.IG)
+    // console.log(this.Entropyleaf)
+    // console.log(this.IGleaf)
   }
 
 }
