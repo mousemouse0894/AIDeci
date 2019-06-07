@@ -1,0 +1,86 @@
+<div>
+<div style="margin-top: 15px">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm">
+        <div>
+          <table class="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Hair</th>
+                <th scope="col">Height</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Lotion</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of record;let x = index;">
+                <td>{{i.Name}}</td>
+                <td>{{i.Hair}}</td>
+                <td>{{i.Height}}</td>
+                <td>{{i.Weight}}</td>
+                <td>{{i.Lotion}}</td>
+                <td>{{i.Result}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm" style="background: white;margin-right: 15px">
+        One of three columns
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 15px" >
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm">
+
+              <div class="from-group">
+              <select name="Hair" id="Hair" [(ngModel)]="Hair" class="form-control">
+                <option value="1">blonde</option>
+                <option value="2">brown</option>
+                <option value="3">red</option>
+              </select>
+            </div><br>
+
+            <div class="from-group">
+                <select name="Height" id="Height" [(ngModel)]="Height" class="form-control">
+                  <option value="1">tall</option>
+                  <option value="2">average</option>
+                  <option value="3">shot</option>
+                </select>
+              </div>
+
+          </div>
+          <div class="col-sm">
+              <div class="from-group">
+                  <select name="Weight" id="Weight" [(ngModel)]="Weight" class="form-control">
+                    <option value="1">light</option>
+                    <option value="2">average</option>
+                    <option value="3">heavy</option>
+                  </select>
+                </div><br>
+
+                <div class="from-group">
+                    <select name="Lotion" id="Lotion" [(ngModel)]="Lotion" class="form-control">
+                      <option value="1">yes</option>
+                      <option value="2">no</option>
+                    </select>
+                  </div>
+          </div>
+          <div class="col-sm">
+              <button type="button" class="btn btn-danger" >ประมวลผล</button><br><br>
+              <button  routerLink="/about" >Home</button>
+              <button type="button" class="btn btn-danger" (click)="onIGleafnode()" >IG</button>
+          </div>
+          <div class="col-sm" style="background: white; margin-right: 15px" >
+            </div>
+        </div>
+      </div>
+  </div>
+
+
+
