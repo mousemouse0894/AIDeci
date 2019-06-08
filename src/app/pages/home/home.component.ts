@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   public Height: any = "0";
   public Weight: any = "0";
   public Lotion: any = "0";
-  public Result: any = "ANS";
+  public Result: any = "";
   public timeprocess: number = 0;
   public threeshow:boolean;
   public buttonpro:boolean = true;
