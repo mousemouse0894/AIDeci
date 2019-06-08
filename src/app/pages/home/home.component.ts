@@ -23,9 +23,10 @@ export class HomeComponent implements OnInit {
   public Height: any = "0";
   public Weight: any = "0";
   public Lotion: any = "0";
-  public Result: any;
+  public Result: any = "ANS";
   public timeprocess: number = 0;
-
+  public threeshow:boolean;
+  public buttonpro:boolean = true;
   //ValueAlgorithmRoot
   public sum = {
     sunburned: 0,
@@ -118,16 +119,22 @@ export class HomeComponent implements OnInit {
   };
 
   constructor() {
-    this.onIGRoot();
-    this.onIGleafnode();
+    // this.onIGRoot();
+    // this.onIGleafnode();
   }
 
   ngOnInit() {
 
   }
 
+   public processtree(){
+     this.onIGRoot();
+     this.onIGleafnode();
+     this.threeshow =  true;
+     this.buttonpro = false;
+   }
    //process
-   public processTree(){
+   public process(){
      if(this.Hair == "3"){
        this.Result = "Sunburned"
      }

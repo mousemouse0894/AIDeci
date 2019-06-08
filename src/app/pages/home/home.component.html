@@ -31,7 +31,7 @@
         &nbsp;&nbsp;&nbsp;
         <div class="col-sm" style="background: white;margin-right: 15px">
 
-          <div style="margin-top: 65px;margin-left: 100px">
+          <div style="margin-top: 65px;margin-left: 100px" *ngIf="threeshow">
             <div class="row">
               <div class="col-md-15">
                 <div class="tree">
@@ -40,7 +40,7 @@
                       <a>Hair</a>
                       <ul>
                         <li>
-                          <a>Red<br>Sunburned</a>
+                          <a style="background-color: crimson">Red<br>Sunburned</a>
                         </li>
                         <li>
                           <a>Blond<br>Lotion</a>
@@ -74,16 +74,16 @@
             <div class="col-2" style="margin-left: 15px;">
 
               <div class="from-group">
-                <select name="Hair" id="Hair" [(ngModel)]="Hair" class="form-control" style="height: 35px;width: 250px">
-                  <option value="0">Hair</option>
+                <select name="Hair" id="Hair" [(ngModel)]="Hair" class="form-control" style="height: 35px;width: 250px" [disabled]="buttonpro">
+                  <option value="0"  hidden="ture">Hair</option>
                   <option value="1">blonde</option>
                   <option value="2">brown</option>
                   <option value="3">red</option>
                 </select>
                 <br>
                 <select name="Height" id="Height" [(ngModel)]="Height" class="form-control"
-                  style="height: 35px;width: 250px">
-                  <option value="0">Height</option>
+                  style="height: 35px;width: 250px" [disabled]="buttonpro">
+                  <option value="0"  hidden="ture">Height</option>
                   <option value="1">tall</option>
                   <option value="2">average</option>
                   <option value="3">shot</option>
@@ -91,30 +91,102 @@
               </div>
               <br>
               <button type="button" class="btn btn-danger" style="height: 40px;width: 250px"
-                (click)="onIGleafnode()">ประมวลผลต้นไม้</button>
+                (click)="processtree()" [disabled]="threeshow" >ประมวลผลต้นไม้</button>
             </div>
             <div class="col-2">
               <div class="from-group">
                 <select name="Weight" id="Weight" [(ngModel)]="Weight" class="form-control"
-                  style="height: 35px;width: 250px">
-                  <option value="0">Weight</option>
+                  style="height: 35px;width: 250px" [disabled]="buttonpro" >
+                  <option value="0" hidden="ture">Weight</option>
                   <option value="1">light</option>
                   <option value="2">average</option>
                   <option value="3">heavy</option>
-                </select><br>
+                </select>
+                <br>
                 <select name="Lotion" id="Lotion" [(ngModel)]="Lotion" class="form-control"
-                  style="height: 35px;width: 250px">
-                  <option value="0">Lotion</option>
+                  style="height: 35px;width: 250px" [disabled]="buttonpro">
+                  <option value="0"  hidden="ture" >Lotion</option>
                   <option value="1">yes</option>
                   <option value="2">no</option>
                 </select>
               </div>
               <br>
               <button type="button" class="btn btn-danger" style="height: 40px;width: 250px"
-                (click)="processTree()">ประมวลผล</button>
+                (click)="process()" [disabled]="buttonpro" >ประมวลผล</button>
             </div>
+
             <div class="col-sm" style="background: white; margin-right: 15px">
-              {{Result}}
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    <div style="margin-top: 75px;margin-left: 50px">
+                      <div class="d-inline p-2 bg-primary text-white">Result: {{Result}}</div>
+                     </div>
+                  </div>
+                  <div class="col-sm">
+
+                    <div>
+                      <table class="table table-sm">
+                        <thead>
+                          <tr>
+                            <th scope="col">Attribute Hair</th>
+                            <th scope="col">IG</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Hair</td>
+                            <td>{{IG.Hair | number}}</td>
+                          </tr>
+                          <tr>
+                            <td>Height</td>
+                            <td>{{IG.Height | number}}</td>
+                          </tr>
+                          <tr>
+                            <td>Weight</td>
+                            <td>{{IG.Weight | number}}</td>
+                          </tr>
+                          <tr>
+                            <td>Lotion</td>
+                            <td>{{IG.Lotion | number}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                  <div class="col-sm">
+
+                    <div>
+                      <table class="table table-sm">
+                        <thead>
+                          <tr>
+                            <th scope="col">Attribute Blond</th>
+                            <th scope="col">IG</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Height</td>
+                            <td>{{IGleaf.Height | number}}</td>
+                          </tr>
+                          <tr>
+                            <td>Weight</td>
+                            <td>{{IGleaf.Weight | number}}</td>
+                          </tr>
+                          <tr>
+                            <td>Lotion</td>
+                            <td>{{IGleaf.Lotion | number}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
